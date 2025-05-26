@@ -14,10 +14,9 @@ const User = require("./models/user.model");
 const TravelStory = require("./models/travelStory.model");
 const { error } = require("console");
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const baseUrl = process.env.BASE_URL || 'http://localhost:8000';
+
+mongoose.connect(process.env.MONGO_URI);
 
 const app = express();
 app.use(express.json());
@@ -113,7 +112,7 @@ app.post("/image-upload",upload.single("image"),async (req,res)=>{
                 .json({ error: true, message: "No image uploaded" });
         }
 
-        const imageUrl = `http://localhost:8000/uploads/${req.file.filename}`;
+        const imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
 
         res.status(200).json({ imageUrl });
     } catch (error) {
@@ -228,8 +227,7 @@ app.put("/edit-story/:id",authenticateToken,async (req, res)=>{
             return res.status(404).json({ error: true, message: "Travel story not found" });
         }
 
-        const placeholderImgUrl = 'http://localhost:8000/assets/placeholder.png';
-
+        const placeholderImgUrl = `${baseUrl}/assets/placeholder.png`;
         travelStory.title = title;
         travelStory.story = story;
         travelStory.visitedLocation = visitedLocation;
@@ -360,13 +358,11 @@ app.get("/travel-stories/filter", authenticateToken, async (req, res) => {
     }
 });
 
-const baseUrl = process.env.BASE_URL || 'http://localhost:8000';
+
 
 // Image upload route
-const imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
 
 // In edit-story route, default placeholder image
-const placeholderImgUrl = `${baseUrl}/assets/placeholder.png`;
 
 
 
