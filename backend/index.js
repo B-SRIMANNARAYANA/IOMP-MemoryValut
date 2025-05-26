@@ -112,7 +112,7 @@ app.post("/image-upload",upload.single("image"),async (req,res)=>{
                 .json({ error: true, message: "No image uploaded" });
         }
 
-        const imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
+        const imageUrl = `https://iomp-memoryvalut.onrender.com/uploads/${req.file.filename}`;
 
         res.status(200).json({ imageUrl });
     } catch (error) {
