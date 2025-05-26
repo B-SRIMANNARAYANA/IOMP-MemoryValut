@@ -1,6 +1,6 @@
 require("dotenv").config();
 const config = require("./config.json");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
