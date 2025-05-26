@@ -14,7 +14,7 @@ const User = require("./models/user.model");
 const TravelStory = require("./models/travelStory.model");
 const { error } = require("console");
 
-const baseUrl = process.env.BASE_URL || 'http://localhost:8000';
+const baseUrl = process.env.BASE_URL;
 
 mongoose.connect(process.env.MONGO_URI);
 
