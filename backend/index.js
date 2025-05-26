@@ -14,7 +14,10 @@ const User = require("./models/user.model");
 const TravelStory = require("./models/travelStory.model");
 const { error } = require("console");
 
-mongoose.connect(config.connectionString);
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 app.use(express.json());
@@ -357,6 +360,18 @@ app.get("/travel-stories/filter", authenticateToken, async (req, res) => {
     }
 });
 
+const baseUrl = process.env.BASE_URL || 'http://localhost:8000';
 
-app.listen(8000);
+// Image upload route
+const imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
+
+// In edit-story route, default placeholder image
+const placeholderImgUrl = `${baseUrl}/assets/placeholder.png`;
+
+
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 module.exports = app;
